@@ -1,3 +1,5 @@
+import javax.swing.plaf.TreeUI;
+
 /** Class that determines whether or not a year is a leap year.
  *  @author YOUR NAME HERE
  */
@@ -28,6 +30,17 @@ public class LeapYear {
                 System.out.printf("%s is not a valid number.\n", args[i]);
             }
         }
+    }
+
+    public static boolean isLeapYear(int year){
+        /** judge year is laep year or not.*/
+        if(year % 400 == 0){
+            return true;
+        }
+        else if(year % 4 ==0 && year % 100 != 0){
+            return true;
+        }
+        else return false;
     }
 }
 
