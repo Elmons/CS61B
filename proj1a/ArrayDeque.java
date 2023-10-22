@@ -11,24 +11,24 @@ public class ArrayDeque<T> {
         tail = 1; //指向下一个尾插位置
         size = 0;
         maxSize = INITSIZE;
-        items = (T[])new Object[INITSIZE];
+        items = (T[]) new Object[INITSIZE];
         utilrate = 0;
     }
 
-    public void upsize() {
+    private void upsize() {
         maxSize = 2 * maxSize;
-        this.copytonew( maxSize / 2);
+        this.copytonew(maxSize / 2);
     }
 
-    public void downsize() {
+    private void downsize() {
         maxSize = maxSize / 2;
         this.copytonew(maxSize * 2);
     }
 
-    public void copytonew(int oldsize) {
-        T[] newItems =(T[]) new Object[maxSize];
+    private void copytonew(int oldsize) {
+        T[] newItems = (T[]) new Object[maxSize];
         int index = (head + 1) % oldsize;
-        for (int i = 0 ; i < size ; i++) {
+        for (int i = 0; i < size; i++) {
             newItems[i] = items[index];
             index = (index + 1) % oldsize;
         }
@@ -42,7 +42,7 @@ public class ArrayDeque<T> {
             upsize();
         }
         items[head] = item;
-        if(head == tail){
+        if (head == tail) {
             tail = (tail + 1) % maxSize;
         }
         head = (head + maxSize - 1) % maxSize;
@@ -54,7 +54,7 @@ public class ArrayDeque<T> {
             upsize();
         }
         items[tail] = item;
-        if(head == tail){
+        if (head == tail) {
             head = (head + maxSize - 1) % maxSize;
         }
         tail = (tail + 1) % maxSize;
@@ -71,18 +71,21 @@ public class ArrayDeque<T> {
 
     public void printDeque() {
         int index = (head + 1) % maxSize;
-        for (int i = 0 ; i < size ; i++) {
+        for (int i = 0; i < size; i++) {
             System.out.print(items[index] + " ");
             index = (index + 1) % maxSize;
         }
         System.out.print("\n");
     }
 
-    public float calfactor(){
-        return (float)size/maxSize;
+    private float calfactor() {
+        return (float) size / maxSize;
     }
 
     public T removeFirst() {
+        if (this.isEmpty()) {
+            return null;
+        }
         T item = items[(head + 1) % maxSize];
         head = (head + 1) % maxSize;
         size -= 1;
@@ -93,8 +96,11 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
-        T item = items[(tail - 1) % maxSize];
-        tail = (tail - 1) % maxSize;
+        if (this.isEmpty()) {
+            return null;
+        }
+        T item = items[(tail - 1 + maxSize) % maxSize];
+        tail = (tail - 1 + maxSize) % maxSize;
         size -= 1;
         if (calfactor() < FACTOR && maxSize > INITSIZE) {
             downsize();
