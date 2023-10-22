@@ -42,7 +42,7 @@ public class ArrayDeque<T> {
             upsize();
         }
         items[head] = item;
-        if (head == tail) {
+        if (size == 0) {
             tail = (tail + 1) % maxSize;
         }
         head = (head + maxSize - 1) % maxSize;
@@ -54,7 +54,7 @@ public class ArrayDeque<T> {
             upsize();
         }
         items[tail] = item;
-        if (head == tail) {
+        if (size == 0) {
             head = (head + maxSize - 1) % maxSize;
         }
         tail = (tail + 1) % maxSize;
