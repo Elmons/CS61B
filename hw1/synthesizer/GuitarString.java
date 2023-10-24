@@ -23,10 +23,14 @@ public class GuitarString {
         //       Your buffer should be initially filled with zeros.
         int capacity = (int) Math.round(SR / frequency);
         buffer = new ArrayRingBuffer<Double>(capacity);
-        pluck();
+        init();
     }
 
-
+    private void init(){
+        while (!buffer.isFull()) {
+            buffer.enqueue(0.0);
+        }
+    }
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
         // TODO: Dequeue everything in the buffer, and replace it with random numbers
