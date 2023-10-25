@@ -67,7 +67,9 @@ public class WorldGenerator {
             int y = p.getY();
             for (int i = x; i < x + w; i++) {
                 for (int j = y; j < y + h; j++) {
-                    if ((i == x || i == x + w - 1 || j == y || j == y + h - 1) && (world[i][j] != floor)) {
+                    if ((i == x || i == x + w - 1
+                            || j == y || j == y + h - 1)
+                            && (world[i][j] != floor)) {
                         world[i][j] = wall;
                     } else {
                         world[i][j] = floor;

@@ -50,6 +50,7 @@ public class Game {
                 break;
             }
         }
+        finalWorldFrame = generator.generateWorld();
         return finalWorldFrame;
     }
 }
