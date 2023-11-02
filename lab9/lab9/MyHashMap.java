@@ -63,14 +63,16 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         if (loadFactor() >= MAX_LF) {
             resize();
         }
-        if (get(key) == null) size++;
+        if (get(key) == null) {
+            size++;
+        }
         int index = hash(key);
-        buckets[index].put(key,value);
+        buckets[index].put(key, value);
     }
 
     private void resize() {
         ArrayMap<K, V>[] oldBuckets = buckets;
-        buckets = new ArrayMap[2* buckets.length];
+        buckets = new ArrayMap[2 * buckets.length];
         size = 0;
         for (int i = 0; i < this.buckets.length; i += 1) {
             this.buckets[i] = new ArrayMap<>();
@@ -79,7 +81,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
             Set<K> set = buck.keySet();
             for (K key: set) {
                 V value = buck.get(key);
-                put(key,value);
+                put(key, value);
             }
         }
     }
