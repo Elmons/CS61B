@@ -2,7 +2,9 @@ package byog.Core;
 
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
+import edu.princeton.cs.introcs.StdDraw;
 
+import java.awt.*;
 import java.util.Random;
 public class WorldGenerator {
     private long seed;
@@ -179,7 +181,7 @@ public class WorldGenerator {
     }
 
     private void generateRoad(TETile[][] world) { //思路：从一个点开始，然后不断回执路线。
-        Position beginP = new Position(width / 2, height / 2);
+        Position beginP = new Position(10, 10);
         Position curP = beginP;
         Position buildP;
         int l;
@@ -280,6 +282,5 @@ public class WorldGenerator {
         }
         return new Position(x, y);
     }
-
 }
 

@@ -1,5 +1,6 @@
 package lab9;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -22,6 +23,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         private Node(K k, V v) {
             key = k;
             value = v;
+            left = null;
+            right = null;
         }
     }
 
@@ -52,7 +55,17 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        Node p = root;
+        while (p != null) {
+            if (p.key.equals(key)) {
+                return p.value;
+            } else if (p.key.compareTo(key) > 0 ) {
+                p = p.left;
+            } else {
+                p = p.right;
+            }
+        }
+        return null;
     }
 
     /** Returns a BSTMap rooted in p with (KEY, VALUE) added as a key-value mapping.
@@ -67,13 +80,37 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        if (root == null) {
+            root = new Node(key,value);
+            size += 1;
+            return;
+        }
+        Node p = root;
+        Node pre = null;
+        while (p != null) {
+            pre = p;
+            if (p.key.equals(key)) {
+                p.value = value;
+                return;
+            } else if (p.key.compareTo(key) > 0 ) {
+                p = p.left;
+            } else {
+                p = p.right;
+            }
+        }
+        p = new Node(key,value);
+        if (pre.key.compareTo(key) > 0){
+            pre.left = p;
+        } else {
+            pre.right = p;
+        }
+        size++;
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
@@ -81,7 +118,17 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     /* Returns a Set view of the keys contained in this map. */
     @Override
     public Set<K> keySet() {
-        throw new UnsupportedOperationException();
+        Set<K> res = new HashSet<K>();
+        keyAdd(root, res);
+        return res;
+    }
+    public void keyAdd(Node p, Set<K> res) {
+        if (p == null) {
+            return;
+        }
+        keyAdd(p.left, res);
+        res.add(p.key);
+        keyAdd(p.right, res);
     }
 
     /** Removes KEY from the tree if present

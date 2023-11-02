@@ -8,7 +8,8 @@ public class WorldGeneratorTest {
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
         TETile[][] world;
-        world = game.playWithInputString("N2154623S");
-        ter.renderFrame(world);
+//        world = game.playWithInputString("N254234345S");
+//        ter.renderFrame(world);
+        game.playWithKeyboard();
     }
 }
