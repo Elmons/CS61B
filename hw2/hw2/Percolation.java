@@ -83,14 +83,21 @@ public class Percolation {
         }
         return grid[row][col] > 0;
     }
+
     public boolean isFull(int row, int col) { // is the site (row, col) full?
         if (!validIndex(row, col)) {
             throw new IndexOutOfBoundsException("Out of index");
         }
+        if(!isOpen(row, col)) {
+            return false;
+        } else if(grid[row][col] == 2) {
+            return true;
+        }
         int p = convert2to1(row, col);
         p = record.find(p);
         int[] pos = convert1to2(p);
-        return grid[pos[0]][pos[1]] == 2;
+        grid[row][col] = grid[pos[0]][pos[1]];
+        return grid[row][col] == 2;
     }
 
     public int numberOfOpenSites() { // number of open sites
@@ -105,7 +112,7 @@ public class Percolation {
         }
         return false;
     }
-    public static void main(String[] args){
+    public static void main(String[] args) {
         return;
     }
 }
