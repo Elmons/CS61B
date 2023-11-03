@@ -7,7 +7,6 @@ public class Percolation {
     private int[][] grid; // 0 -- blocked, 1 -- open, 2 -- full
     private int sizeOpen;
     private int len;
-    private boolean ispercolation;
     public Percolation(int N) { // create N-by-N grid, with all sites initially blocked
         if (N <= 0) {
             throw new IllegalArgumentException("N should be not negative!");
@@ -16,7 +15,6 @@ public class Percolation {
         grid = new int[N][N];
         len = N;
         sizeOpen = 0;
-        ispercolation = false;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 grid[i][j] = 0;
@@ -35,6 +33,9 @@ public class Percolation {
         if (!validIndex(row, col)) {
             throw new IndexOutOfBoundsException("Out of index");
         }
+        if (isOpen(row, col)) {
+            return;
+        }
         if (row == 0) {
             grid[row][col] = 2;
         } else {
@@ -44,11 +45,11 @@ public class Percolation {
         connect(row, col);
     }
 
-    public int convert2to1(int row, int col) {
+    private int convert2to1(int row, int col) {
         return row * len + col;
     }
 
-    public int[]convert1to2(int p) {
+    private int[]convert1to2(int p) {
         int x = p / len;
         int y = p % len;
         return new int[]{x, y};

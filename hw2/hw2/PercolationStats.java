@@ -8,6 +8,9 @@ public class PercolationStats {
 
     private static final double LAMBDA = 1.96;
     public PercolationStats(int N, int T, PercolationFactory pf) {
+        if (N <= 0 || T <= 0) {
+            throw new IllegalArgumentException("Negative!");
+        }
         x = new double[T];
         len = N;
         numExp = T;
@@ -18,12 +21,18 @@ public class PercolationStats {
         }
     }
 
+    private int[]convert1to2(int p) {
+        int a = p / len;
+        int b = p % len;
+        return new int[]{a, b};
+    }
+
     private double monteCarloSimulate(Percolation perc, int[] indices) {
         int index = 0;
         while (!perc.percolates()) {
             int p = indices[index];
             index++;
-            int[] pos = perc.convert1to2(p);
+            int[] pos = convert1to2(p);
             int row = pos[0], col = pos[1];
             perc.open(row, col);
         }
@@ -42,7 +51,7 @@ public class PercolationStats {
         for (int i = 0; i < numExp; i++) {
             sigama += Math.pow(x[i] - miu, 2);
         }
-        sigama = sigama / numExp;
+        sigama = sigama / (numExp - 1);
         return Math.sqrt(sigama);
     }
     public double confidenceLow() { // low endpoint of 95% confidence interval
